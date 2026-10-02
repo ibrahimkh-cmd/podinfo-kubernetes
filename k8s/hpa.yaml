@@ -1,0 +1,22 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: web-hpa                    # NOM de l'HPA
+spec:
+  scaleTargetRef:                  # QUI on scale
+    apiVersion: apps/v1
+    kind: Deployment
+    name: web-deploy               # ← notre Deployment
+  minReplicas: 2                   # jamais moins de 2 pods
+  maxReplicas: 6                   # jamais plus de 6 pods
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 50   # objectif : CPU moyen à 50 % des requests
+          #les « 50 % » sont calculés par rapport aux requests du Deployment,
+          #pas au CPU de la machine. Mon conteneur demande cpu: 50m,
+          #  donc l'HPA ajoute des pods dès que la moyenne dépasse 25m par pod(25m=la moyenne de cpu dans requests). 
+          #  Sans requests, l'HPA ne peut pas fonctionner.

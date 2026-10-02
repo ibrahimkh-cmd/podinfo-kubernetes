@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: web-deploy                 # NOM du Deployment (pour les commandes kubectl)
 spec:
-  replicas: 2
+  #replicas: 2  #j'utilise plutot hpa(horiz pod autoscaling , voir hpa.yaml)
   selector:
     matchLabels:
       app: web-app                 # pour gèrer les pods étiquetés "web-app"
