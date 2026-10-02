@@ -1,0 +1,21 @@
+# Configuration du chart kube-prometheus-stack
+grafana:
+  adminPassword: admin
+
+prometheus:
+  prometheusSpec:
+    retention: 1d                                   # garde 1 jour de métriques (lab)
+    serviceMonitorSelectorNilUsesHelmValues: false  # surveille TOUS les ServiceMonitor (dont le nôtre)
+    podMonitorSelectorNilUsesHelmValues: false
+
+alertmanager:
+  enabled: false                                    # pas d'alerting pour l'instant (allège la stack)
+
+
+# Composants du plan de contrôle non joignables sur Minikube (écoutent sur 127.0.0.1)
+kubeControllerManager:
+  enabled: false
+kubeScheduler:
+  enabled: false
+kubeEtcd:
+  enabled: false  

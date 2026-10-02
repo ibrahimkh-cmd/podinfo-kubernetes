@@ -1,0 +1,12 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: web-monitor                # NOM du ServiceMonitor
+spec:
+  selector:
+    matchLabels:
+      app: web-app                 # surveille les Services étiquetés "web-app"
+  endpoints:
+    - port: http                   # le port nommé "http" du Service
+      path: /metrics
+      interval: 15s
