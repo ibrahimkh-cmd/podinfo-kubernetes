@@ -103,19 +103,12 @@ kubectl delete deployment load-gen
 
 > Sous Git Bash (Windows), préfixer la commande par `MSYS_NO_PATHCONV=1` pour éviter la conversion de `/bin/sh` en chemin Windows.
 
-## Points techniques
 
-- **HPA** : l'utilisation CPU est calculée par rapport aux `requests` du conteneur (50m) ; sans requests, l'HPA ne peut pas fonctionner. Formule : `replicas = ceil(replicas actuels × CPU actuel / CPU cible)`. Le champ `replicas` est retiré du Deployment pour que l'HPA en soit seul responsable.
-- **Probes** : la liveness redémarre un conteneur bloqué ; la readiness retire un pod du Service sans le redémarrer.
-- **ServiceMonitor** : sélectionne un Service par label, puis lit ses Endpoints pour trouver le port nommé `http`.
-- **Minikube** : `kube-controller-manager`, `kube-scheduler` et `etcd` écoutent sur `127.0.0.1` et ne sont pas joignables par Prometheus ; leur supervision est désactivée dans `values.yaml`.
 
 ## Pistes d'évolution
 
-- GitOps avec Argo CD (synchronisation du cluster depuis ce dépôt)
 - Règles d'alerte Prometheus + Alertmanager
 - Exposition via un Ingress
-- Déploiement sur un cluster managé (EKS) provisionné avec Terraform
 
 ## Projets liés
 
